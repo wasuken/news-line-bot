@@ -12,7 +12,8 @@
 
 (defn process-event [event-json]
   (let [reply-token (get event-json "replyToken")]
-    (cond (= (:type event-json) "message")
+    (log/debug "=======================")
+    (cond (= (get event-json type) "message")
           (let [message-text (get (get event-json "message") "text")]
             (log/debug "=======================")
             (log/debug (.replyMessage line-bot-client (ReplyMessage. reply-token "test")))))))
