@@ -24,4 +24,4 @@
   (log/debug headers)
   (let [xsig (get headers "x-line-signature")]
     (println xsig))
-  (doall (map process-event (:events body-json))))
+  (doall (map process-event (get body-json "events"))))
