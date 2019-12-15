@@ -17,7 +17,12 @@
     (cond (= (get event-json "type") "message")
           (let [message-text (get (get event-json "message") "text")]
             (log/debug "=======================")
-            (log/debug (.replyMessage line-bot-client (ReplyMessage. reply-token "test")))))))
+            (let [resp (.get (.replyMessage line-bot-client (ReplyMessage. reply-token "test")))]
+              (log/debug (.getRequestId resp))
+              (log/debug (.getMessage resp))
+              (log/debug (.getDetails resp))
+              )
+            ))))
 
 (defn line-callback [body-json headers]
   
