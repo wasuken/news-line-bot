@@ -16,6 +16,8 @@
             (.replyMessage line-bot-client (ReplyMessage. reply-token "test"))))))
 
 (defn line-callback [body-json headers]
+  (println body-json)
+  (println headers)
   (let [xsig (get headers "X-Line-Signature")]
     (println xsig))
   (doall (map process-event (:events body-json))))
