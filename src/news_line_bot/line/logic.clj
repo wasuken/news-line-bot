@@ -14,9 +14,11 @@
   (let [reply-token (get event-json "replyToken")]
     (cond (= (:type event-json) "message")
           (let [message-text (get (get event-json "message") "text")]
+            (log/debug "=======================")
             (log/debug (.replyMessage line-bot-client (ReplyMessage. reply-token "test")))))))
 
 (defn line-callback [body-json headers]
+  
   (log/debug body-json)
   (log/debug headers)
   (let [xsig (get headers "x-line-signature")]
