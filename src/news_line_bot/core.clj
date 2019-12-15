@@ -6,7 +6,8 @@
             [clojure.data.json :as json]
             [ring.util.request :refer [body-string]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [news-line-bot.line.logic :refer [line-callback]]))
+            [news-line-bot.line.logic :refer [line-callback]]
+            [clojure.tools.logging :as log]))
 
 (defroutes app-routes
   (POST "/callback" req (line-callback (json/read-str (:body-text req))　 (:headers req)))

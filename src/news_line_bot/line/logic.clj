@@ -1,7 +1,8 @@
 (ns news-line-bot.line.logic
   (:gen-class)
   (:require [environ.core :refer [env]]
-            [ring.util.response :as response])
+            [ring.util.response :as response]
+            [clojure.tools.logging :as log])
   (:import [com.linecorp.bot.client LineMessagingClient]
             [com.linecorp.bot.model ReplyMessage]))
 
@@ -16,8 +17,8 @@
             (.replyMessage line-bot-client (ReplyMessage. reply-token "test"))))))
 
 (defn line-callback [body-json headers]
-  (println body-json)
-  (println headers)
+  (log/debug body-json)
+  (log/debug headers)
   (let [xsig (get headers "X-Line-Signature")]
     (println xsig))
   (doall (map process-event (:events body-json))))
