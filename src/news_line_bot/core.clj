@@ -9,7 +9,7 @@
             [news-line-bot.line.logic :refer [line-callback]]))
 
 (defroutes app-routes
-  (POST "/callback" req (line-callback (json/read-str (:body-text req))))
+  (POST "/callback" req (line-callback (json/read-str (:body-text req))　 (:headers req)))
   (route/not-found "<h1>Page not found</h1>"))
 
 (defn assoc-in-all-value [m value & paths]
