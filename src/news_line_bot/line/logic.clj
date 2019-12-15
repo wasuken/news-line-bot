@@ -11,14 +11,14 @@
 
 
 (defn process-event [event-json]
-  (let [reply-token (:replyToken event-json)]
+  (let [reply-token (get event-json "replyToken")]
     (cond (= (:type event-json) "message")
-          (let [message-text (:text (:message event-json))]
-            (.replyMessage line-bot-client (ReplyMessage. reply-token "test"))))))
+          (let [message-text (get (get event-json "message") "text")]
+            (log/debug (.replyMessage line-bot-client (ReplyMessage. reply-token "test")))))))
 
 (defn line-callback [body-json headers]
   (log/debug body-json)
   (log/debug headers)
-  (let [xsig (get headers "X-Line-Signature")]
+  (let [xsig (get headers "x-line-signature")]
     (println xsig))
   (doall (map process-event (:events body-json))))
