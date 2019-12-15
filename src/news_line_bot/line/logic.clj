@@ -4,4 +4,4 @@
             [ring.util.response :as response]))
 
 (defn line-callback [request]
-  (response/response "hello"))
+  )
