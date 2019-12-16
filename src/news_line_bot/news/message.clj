@@ -6,7 +6,8 @@
             [clojure.tools.logging :as log]
             [news-line-bot.const :refer [pg-db]]))
 
-
+(defn my-escape [val]
+  (cstr/escape val {\< "&lt;", \> "&gt;", \& "&amp;", \= "", \' ""}))
 
 (defn create-news-list-text
   ([] (create-news-list-text "created_at"))
@@ -18,10 +19,10 @@
                                           (newline)
                                           (:url x "none")))
                           (jdbc/query pg-db [(str "select * from posts order by "
-                                                   (cstr/escape sort-key)　 " "
+                                                   (my-escape sort-key) " "
                                                    order
                                                    " limit "　
-                                                   (cstr/escape (str limit)))]))
+                                                   (my-escape (str limit)))]))
                        (newline)))
      (catch Exception e (let [err-msg (str "caught exception: " (.getMessage e))]
                           (log/debug err-msg)
