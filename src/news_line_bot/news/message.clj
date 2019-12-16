@@ -25,8 +25,8 @@
                            (my-escape sort-key) " "
                            order
                            " limit "
-                           (my-escape (str limit))
                            (my-escape (str limit)))
+                      (str "%" (my-escape keyword) "%")
                       (str "%" (my-escape keyword) "%")])))
 
 (defn create-news-search-list-text
