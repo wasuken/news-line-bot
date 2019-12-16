@@ -27,7 +27,7 @@
         message-type (get message "type")]
     (log/debug "=====================")
     (log/debug type)
-    (log/debug messsage)
+    (log/debug message)
     (log/debug (get message "text"))
     (cond (= type "follow")
           (reply-message (TextMessage. "フォローありがとうございます。"))
