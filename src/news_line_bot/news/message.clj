@@ -7,7 +7,7 @@
             [news-line-bot.const :refer [pg-db]]))
 
 (defn my-escape [val]
-  (cstr/escape val {\< "&lt;", \> "&gt;", \& "&amp;", \= "", \' ""}))
+  (cstr/escape val {\< "&lt;", \> "&gt;", \& "&amp;", \= ""}))
 
 (defn create-news-list-text
   ([] (create-news-list-text "created_at"))
@@ -15,6 +15,11 @@
   ([sort-key order] (create-news-list-text sort-key order 10))
   ([sort-key order limit]
    (try
+     (log/debug (str "select * from posts order by "
+                     (my-escape sort-key) " "
+                     order
+                     " limit "　
+                     (my-escape (str limit))))
      (doall (cstr/join (map (fn [x] (str (subs (:title x) 0 (min (count (:title x "none")) 40))
                                           (newline)
                                           (:url x "none")))
