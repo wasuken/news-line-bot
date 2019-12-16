@@ -1,44 +1,29 @@
 # news-line-bot
 
-FIXME: description
+一日+αで作ったやつ。javaのsdkがなかったら倍かかってたかもしれぬ。
 
-## Installation
+ニュースをリンク付きで伝えてくれるすごいロボだよ！
 
-Download from http://example.com/FIXME.
+## 現状の機能
 
-## Usage
+### "news"
 
-FIXME: explanation
+取得日付が最新のニュース最大10件が入ったリプライを送信するよ。
 
-    $ java -jar news-line-bot-0.1.0-standalone.jar [args]
+### "news:[検索キーワード]"
 
-## Options
+ロボは賢くないので
 
-FIXME: listing of options this app accepts.
+"Vue React"とか入力しても気を利かせて検索とかしないよ。
 
-## Examples
+## 今後の拡張予定
 
-...
+上に行くほど早く手をつけます。
 
-### Bugs
+* ヘルプコマンド
 
-...
+* and,or検索
 
-### Any Other Sections
-### That You Think
-### Might be Useful
+* notパラメータ("-うんち"でうんちが入ったワードを検索から外す)
 
-## License
-
-Copyright © 2019 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+* 要望送信機能(いるか？)
