@@ -21,13 +21,13 @@
                            " limit "　
                            (my-escape (str limit)))]))
   ([sort-key order limit keyword]
-   (jdbc/query pg-db [(str "select * from posts where title like ? or description like ? order by "
+   (jdbc/query pg-db [(str "select * from posts where lower(title) like ? or lower(description) like ? order by "
                            (my-escape sort-key) " "
                            order
                            " limit "
                            (my-escape (str limit)))
-                      (str "%" (my-escape keyword) "%")
-                      (str "%" (my-escape keyword) "%")])))
+                      (clojure.string/lower-case (str "%" (my-escape keyword) "%"))
+                      (clojure.string/lower-case (str "%" (my-escape keyword) "%"))])))
 
 (defn create-news-search-list-text
   ([keyword]
