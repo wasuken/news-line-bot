@@ -24,8 +24,10 @@
    (jdbc/query pg-db [(str "select * from posts where title like ? or description like ? order by "
                            (my-escape sort-key) " "
                            order
-                           " limit "　
-                           (my-escape (str limit))) (str "%" (my-escape keyword) "%")])))
+                           " limit "
+                           (my-escape (str limit))
+                           (my-escape (str limit)))
+                      (str "%" (my-escape keyword) "%")])))
 
 (defn create-news-search-list-text
   ([keyword]
