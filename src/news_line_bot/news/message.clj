@@ -20,15 +20,21 @@
                      order
                      " limit "　
                      (my-escape (str limit))))
-     (doall (cstr/join (map (fn [x] (str (subs (:title x) 0 (min (count (:title x "none")) 40))
-                                          (newline)
-                                          (:url x "none")))
-                          (jdbc/query pg-db [(str "select * from posts order by "
-                                                   (my-escape sort-key) " "
-                                                   order
-                                                   " limit "　
-                                                   (my-escape (str limit)))]))
-                       (newline)))
+     (log/debug "____________________")
+     (log/debug (jdbc/query pg-db [(str "select * from posts order by "
+                                                    (my-escape sort-key) " "
+                                                    order
+                                                    " limit "　
+                                                    (my-escape (str limit)))]))
+     (doall (cstr/join (newline)
+                       (map (fn [x] (str (subs (:title x "none") 0 (min (count (:title x "none")) 40))
+                                         (newline)
+                                         (:url x "none")))
+                            (jdbc/query pg-db [(str "select * from posts order by "
+                                                    (my-escape sort-key) " "
+                                                    order
+                                                    " limit "　
+                                                    (my-escape (str limit)))]))))
      (catch Exception e (let [err-msg (str "caught exception: " (.getMessage e))]
                           (log/debug err-msg)
                           "記事の取得中にエラーが発生しました。")))))
