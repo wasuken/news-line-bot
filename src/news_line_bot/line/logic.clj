@@ -15,15 +15,20 @@
 
 (defn reply-message [reply-token msg]
   (let [resp (.get (.replyMessage line-bot-client (ReplyMessage. reply-token msg)))]
-              (log/debug (.getRequestId resp))
-              (log/debug (.getMessage resp))
-              (log/debug (.getDetails resp))))
+    (log/debug "***********************")
+    (log/debug (.getRequestId resp))
+    (log/debug (.getMessage resp))
+    (log/debug (.getDetails resp))))
 
 (defn process-event [event]
   (let [reply-token (get event "replyToken")
         type (get event "type")
         message (get event "message")
         message-type (get message "type")]
+    (log/debug "=====================")
+    (log/debug type)
+    (log/debug messsage)
+    (log/debug (get message "text"))
     (cond (= type "follow")
           (reply-message (TextMessage. "フォローありがとうございます。"))
           (= type "message")
