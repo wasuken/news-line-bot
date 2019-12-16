@@ -5,7 +5,9 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/java.jdbc "0.7.10"]
-                 [org.postgresql/postgresql "9.4-1205-jdbc42"]
+                 [org.postgresql/postgresql "42.1.4"]
+                 [feedme "0.0.3"]
+                 [enlive "1.1.6"]
                  [environ "1.1.0"]
                  [compojure "1.6.1"]
                  [ring/ring-defaults "0.3.2"]

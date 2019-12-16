@@ -24,10 +24,12 @@
         type (get event "type")
         message (get event "message")
         message-type (get message "type")]
-    (cond (= type "message")
+    (cond (= type "follow")
           (reply-message (TextMessage. "フォローありがとうございます。"))
-          (= type "follow")
-          (reply-message (TextMessage. (create-news-list-text)))
+          (= type "message")
+          (if (not (clojure.string/blank? (get message "text")))
+            (cond (re-find (re-matcher #"news|ニュース|list" (get message "text")))
+                  (reply-message (TextMessage. (create-news-list-text)))))
           :else (log/debug (str "not suppoert type: " type)))))
 
 (defn response->check [body x-line-sig]

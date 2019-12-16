@@ -3,10 +3,10 @@
   (:require [environ.core :refer [env]]
             [clojure.java.jdbc :as jdbc]
             [clojure.string :as cstr]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [news-line-bot.const :refer [pg-db]]))
 
-(def pg-uri
-  {:connection-uri (env :database-url)})
+
 
 (defn create-news-list-text
   ([] (create-news-list-text "created_at"))
@@ -17,7 +17,7 @@
      (doall (cstr/join (map (fn [x] (str (subs (:title x) 0 (min (count (:title x "none")) 40))
                                           (newline)
                                           (:url x "none")))
-                          (jdbc/query pg-uri [(str "select * from posts order by "
+                          (jdbc/query pg-db [(str "select * from posts order by "
                                                    (cstr/escape sort-key)　 " "
                                                    order
                                                    " limit "　

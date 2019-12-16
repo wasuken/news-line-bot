@@ -11,3 +11,5 @@ pom.xml.asc
 .hgignore
 .hg/
 set-heroku-config.sh
+set-links-batch.sh
+batch.sh
