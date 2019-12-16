@@ -4,7 +4,7 @@
             [ring.util.response :as response]
             [clojure.tools.logging :as log]
             [clojure.data.json :as json]
-            [news-line-bot.news.message :refer [create-news-list-text]])
+            [news-line-bot.news.message :refer [create-news-list-text create-news-search-list-text]])
   (:import [com.linecorp.bot.client LineMessagingClient LineSignatureValidator]
            [com.linecorp.bot.model ReplyMessage]
            [com.linecorp.bot.model.message TextMessage]
@@ -29,7 +29,13 @@
           (reply-message reply-token (TextMessage. "フォローありがとうございます。"))
           (= type "message")
           (if (not (clojure.string/blank? (get message "text")))
-            (cond (re-find (re-matcher #"news|ニュース|list" (get message "text")))
+            (cond (re-find (re-matcher #"news:|ニュース:|list:.+" (get message "text")))
+                  (reply-message reply-token
+                                 (TextMessage. (create-news-search-list-text
+                                                (clojure.string/join ":"
+                                                                     (drop 1 (clojure.string/split
+                                                                              (get message "text") #":"))))))
+                  (re-find (re-matcher #"news|ニュース|list" (get message "text")))
                   (reply-message reply-token (TextMessage. (create-news-list-text)))))
           :else (log/debug (str "not suppoert type: " type)))))
 
