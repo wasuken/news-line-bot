@@ -30,11 +30,11 @@
     (log/debug message)
     (log/debug (get message "text"))
     (cond (= type "follow")
-          (reply-message (TextMessage. "フォローありがとうございます。"))
+          (reply-message reply-token (TextMessage. "フォローありがとうございます。"))
           (= type "message")
           (if (not (clojure.string/blank? (get message "text")))
             (cond (re-find (re-matcher #"news|ニュース|list" (get message "text")))
-                  (reply-message (TextMessage. (create-news-list-text)))))
+                  (reply-message reply-token (TextMessage. (create-news-list-text)))))
           :else (log/debug (str "not suppoert type: " type)))))
 
 (defn response->check [body x-line-sig]
