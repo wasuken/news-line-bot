@@ -39,7 +39,7 @@
 
 (defn response->check [body x-line-sig]
   (.validateSignature (LineSignatureValidator.
-                                       (.getBytes (env :line-channel-token)))
+                                       (.getBytes (env :line-secret)))
                                       (.getBytes body)
                                       x-line-sig))
 
