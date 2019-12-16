@@ -3,14 +3,13 @@
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [environ.core :refer [env]]
-            [clojure.data.json :as json]
             [ring.util.request :refer [body-string]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [news-line-bot.line.logic :refer [line-callback]]
             [clojure.tools.logging :as log]))
 
 (defroutes app-routes
-  (POST "/callback" req (line-callback (json/read-str (:body-text req))　 (:headers req)))
+  (POST "/callback" req (line-callback (:body-text req) (:headers req)))
   (route/not-found "<h1>Page not found</h1>"))
 
 (defn assoc-in-all-value [m value & paths]
