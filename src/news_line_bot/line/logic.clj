@@ -45,6 +45,8 @@
 
 (defn line-callback [body headers]
   (log/debug "=====================")
+  (log/debug headers)
   (log/debug body)
+  (log/debug (response->check body (get headers "x-line-signature" "")))
   (cond (response->check body (get headers "x-line-signature" ""))
         (doall (map process-event (get (json/read-str body) "events")))))
