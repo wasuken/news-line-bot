@@ -25,10 +25,6 @@
         type (get event "type")
         message (get event "message")
         message-type (get message "type")]
-    (log/debug "=====================")
-    (log/debug type)
-    (log/debug message)
-    (log/debug (get message "text"))
     (cond (= type "follow")
           (reply-message reply-token (TextMessage. "フォローありがとうございます。"))
           (= type "message")
@@ -44,9 +40,5 @@
                                       x-line-sig))
 
 (defn line-callback [body headers]
-  (log/debug "=====================")
-  (log/debug headers)
-  (log/debug body)
-  (log/debug (response->check body (get headers "x-line-signature" "")))
   (cond (response->check body (get headers "x-line-signature" ""))
         (doall (map process-event (get (json/read-str body) "events")))))
