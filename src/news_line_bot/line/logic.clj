@@ -30,11 +30,14 @@
           (= type "message")
           (if (not (clojure.string/blank? (get message "text")))
             (cond (re-find (re-matcher #"news:|ニュース:|list:.+" (get message "text")))
-                  (reply-message reply-token
-                                 (TextMessage. (create-news-search-list-text
-                                                (clojure.string/join ":"
-                                                                     (drop 1 (clojure.string/split
-                                                                              (get message "text") #":"))))))
+                  (let [send-msg (create-news-search-list-text
+                                 (clojure.string/join ":"
+                                                      (drop 1 (clojure.string/split
+                                                               (get message "text") #":"))))]
+                    (log/debug "=============")
+                    (log/debug send-msg)
+                    (reply-message reply-token
+                                 (TextMessage. send-msg)))
                   (re-find (re-matcher #"news|ニュース|list" (get message "text")))
                   (reply-message reply-token (TextMessage. (create-news-list-text)))))
           :else (log/debug (str "not suppoert type: " type)))))
